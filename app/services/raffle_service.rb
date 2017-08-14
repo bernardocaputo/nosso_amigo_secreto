@@ -18,6 +18,7 @@ class RaffleService
         friend = friends_list.sample
 
         if friends_list.count == 1 and friend == m
+          i = 0
           results = {}
           members_list = @campaign.members
           friends_list = @campaign.members
