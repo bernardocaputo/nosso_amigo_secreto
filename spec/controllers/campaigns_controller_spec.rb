@@ -21,7 +21,7 @@ RSpec.describe CampaignsController, type: :controller do
   describe "GET #show" do
 
     context "campaing exists" do
-      context "User is the owner of the campaing" do
+      context "User is the owner of the campaign" do
         it "Returns success" do
           campaign = create(:campaign, user: @current_user)
           get :show, params: {id: campaign.id}
