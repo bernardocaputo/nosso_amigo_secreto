@@ -2,6 +2,8 @@ class Member < ApplicationRecord
   belongs_to :campaign
   after_destroy :set_campaign_pending
   validates :name, :email, :campaign, presence: true
+  validates_uniqueness_of :email, :scope => :campaign_id
+
 
   def set_pixel
     self.open = false
