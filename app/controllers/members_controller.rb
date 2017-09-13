@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   before_action :set_member, only: [:show, :destroy, :update]
   before_action :is_owner?, only: [:destroy, :update]
   before_action :set_member_by_token, only: [:opened]
-
+  before_action :set_campaign, only: [:create]
   def create
     @member = Member.new(member_params)
 
@@ -53,6 +53,15 @@ class MembersController < ApplicationController
 
   def member_params
     params.require(:member).permit(:name, :email, :campaign_id)
+  end
+
+  def set_campaign
+    @campaign = Campaign.find_by!(params[:id])
+    unless current_user == @campaign.user
+      respond_to do |format|
+        format.json { render json: false, status: :forbidden }
+      end
+    end
   end
 
   def is_owner?

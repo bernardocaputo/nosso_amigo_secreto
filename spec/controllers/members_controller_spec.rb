@@ -48,7 +48,7 @@ RSpec.describe MembersController, type: :controller do
         post :create, params: { member: @member_attributes }
       end
 
-      it "returns http status unprocessable_entity" do
+      it "recreate a member that exists: returns http status unprocessable_entity" do
         post :create, params: { member: @member_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -56,14 +56,12 @@ RSpec.describe MembersController, type: :controller do
 
     context "forbidden action" do
       before(:each) do
-        @other_campaign = create(:campaign)
-        @member = create(:member)
         @member_attributes = attributes_for(:member)
         post :create, params: { member: @member_attributes }
       end
 
       it "campaign user who is not the owner of the campaign cannot add member" do
-        expect(response).not_to have_http_status(:created)
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
