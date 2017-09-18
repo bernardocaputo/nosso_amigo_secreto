@@ -4,7 +4,6 @@ class Member < ApplicationRecord
   validates :name, :email, :campaign, presence: true
   validates_uniqueness_of :email, :scope => :campaign_id
 
-
   def set_pixel
     self.open = false
     self.token = loop do
